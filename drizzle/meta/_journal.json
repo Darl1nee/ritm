@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1794792495322,
+      "tag": "0000_tan_mole_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1795057339971,
+      "tag": "0001_mcp",
+      "breakpoints": true
+    }
+  ]
+}
