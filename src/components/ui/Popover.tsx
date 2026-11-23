@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
+import { motion, AnimatePresence } from "motion/react";
 
 interface PopoverProps {
   /** Элемент-триггер (кнопка). Клик по нему открывает/закрывает поповер. */
@@ -59,18 +60,24 @@ export function Popover({
       <div className="inline-flex" onClick={() => setOpen(!open)} aria-expanded={open}>
         {trigger}
       </div>
-      {open && (
-        <div
-          className={clsx(
-            "anim-pop absolute z-40 min-w-[200px] rounded-2xl bg-surface p-1.5 text-fg shadow-pop ring-1 ring-line",
-            side === "bottom" ? "top-full mt-2" : "bottom-full mb-2",
-            align === "end" ? "right-0" : "left-0",
-            panelClassName,
-          )}
-        >
-          {typeof children === "function" ? children(() => setOpen(false)) : children}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: side === "bottom" ? -8 : 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: side === "bottom" ? -4 : 4 }}
+            transition={{ type: "spring", stiffness: 450, damping: 28 }}
+            className={clsx(
+              "absolute z-40 min-w-[200px] rounded-2xl apple-glass p-1.5 text-fg shadow-pop",
+              side === "bottom" ? "top-full mt-2" : "bottom-full mb-2",
+              align === "end" ? "right-0" : "left-0",
+              panelClassName,
+            )}
+          >
+            {typeof children === "function" ? children(() => setOpen(false)) : children}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
